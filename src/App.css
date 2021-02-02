@@ -8,6 +8,11 @@ header {
   color: #304252;
   width: 90%;
   margin: 0 auto 20px auto;
+  height: 20vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .add-todo-input {
@@ -17,14 +22,6 @@ header {
 
 .add-btn {
   padding: 3px;
-}
-
-h1 {
-  height: 20vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 section, div {
