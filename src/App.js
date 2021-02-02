@@ -26,6 +26,12 @@ function App() {
     setTodoList(newTodoList);
   }
 
+  const handleSubmit = e => {
+    e.preventDefault();
+    const newList = [...todoList, {title: newTodo, complete: false}];
+    setTodoList(newList);
+  }
+
 
   return (
     <main>
@@ -34,7 +40,7 @@ function App() {
       </header>
 
       <section>
-        <form>
+        <form onSubmit={handleSubmit}>
           <label htmlFor="add-todo">New Shit:</label>
           <input id="add-todo" className="add-todo-input" type="text" required onChange={
             e => setNewTodo(e.target.value)
