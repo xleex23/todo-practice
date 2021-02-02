@@ -7,15 +7,15 @@ function App() {
   const [todoList, setTodoList] = useState([
     {
       title: 'buy groceries',
-      complete: false
+      completed: false
     },
     {
       title: 'feed dog',
-      complete: false
+      completed: false
     },
     {
       title: 'laundry',
-      complete: false
+      completed: false
     }
   ])
   const [newTodo, setNewTodo] = useState("");
@@ -36,6 +36,12 @@ function App() {
   const handleChange = e => {
     e.preventDefault();
     setNewTodo(e.target.value);
+  }
+
+  const handleComplete = (i) => {
+    const newTodos = [...todoList];
+    todoList[i].completed = !todoList[i].completed;
+    setTodoList(newTodos)
   }
 
 
@@ -60,6 +66,7 @@ function App() {
               index={i}
               todo={todo}
               deleteTodo={handleDelete}
+              completeTodo={handleComplete}
             />
           ))}
       </div>
