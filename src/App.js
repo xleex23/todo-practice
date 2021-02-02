@@ -30,7 +30,7 @@ function App() {
     e.preventDefault();
     const newList = [...todoList, {title: newTodo, complete: false}];
     setTodoList(newList);
-    Array.from(document.querySelector("#add-todo").value="")
+    document.querySelector("#add-todo").value=""
   }
 
   const handleChange = e => {
