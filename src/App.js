@@ -18,7 +18,7 @@ function App() {
       complete: false
     }
   ])
-  const [newTodo, setNewTodo] = useState('');
+  const [newTodo, setNewTodo] = useState("");
 
   const handleDelete = i => {
     const newTodoList = [...todoList];
@@ -30,6 +30,12 @@ function App() {
     e.preventDefault();
     const newList = [...todoList, {title: newTodo, complete: false}];
     setTodoList(newList);
+    Array.from(document.querySelector("#add-todo").value="")
+  }
+
+  const handleChange = e => {
+    e.preventDefault();
+    setNewTodo(e.target.value);
   }
 
 
@@ -42,10 +48,8 @@ function App() {
       <section>
         <form onSubmit={handleSubmit}>
           <label htmlFor="add-todo">New Shit:</label>
-          <input id="add-todo" className="add-todo-input" type="text" required onChange={
-            e => setNewTodo(e.target.value)
-          }/>
-          <input type="submit" value="Add" className="add-btn"/>
+          <input id="add-todo" className="add-todo-input" type="text" required onChange={handleChange}/>
+          <input type="submit" className="add-btn" value="Add" />
         </form>
       </section>
 
