@@ -58,10 +58,15 @@ function App() {
     setNewTodo(e.target.value);
   }
 
-  const handleComplete = (i) => {
-    const newTodos = [...todoList];
-    todoList[i].completed = !todoList[i].completed;
-    setTodoList(newTodos)
+  const handleComplete = todo => {
+    const completed = todo.completed
+    ref
+      .where("id", "==", todo.id).get()
+      .then((querySnapshot)=>{
+        querySnapshot.forEach((doc) => doc.ref.update({
+          completed: !completed
+        }))
+      })
   }
 
 
