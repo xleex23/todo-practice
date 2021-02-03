@@ -1,35 +1,55 @@
 import React, { useState, useEffect } from 'react';
 import Todo from './Todo';
+import firebase from './firebase';
+import { v4 as uuidv4 } from 'uuid';
 import './App.css';
+import { createTypeAnnotationBasedOnTypeof } from '@babel/types';
 
 function App() {
 
-  const [todoList, setTodoList] = useState([
-    {
-      title: 'buy groceries',
-      completed: false
-    },
-    {
-      title: 'feed dog',
-      completed: false
-    },
-    {
-      title: 'laundry',
-      completed: false
-    }
-  ])
+  const [todoList, setTodoList] = useState([])
   const [newTodo, setNewTodo] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleDelete = i => {
-    const newTodoList = [...todoList];
-    newTodoList.splice(i, 1);
-    setTodoList(newTodoList);
+  const ref = firebase.firestore().collection('todos');
+
+  function getTodos() {
+    setLoading(true);
+    ref.onSnapshot((querySnapshot) => {
+      const items = [];
+      querySnapshot.forEach((doc) => {
+        items.push(doc.data());
+      })
+      setTodoList(items);
+      setLoading(false);
+    })
+  }
+
+  useEffect(() => {
+    getTodos()
+  }, [])
+
+  
+
+  const handleDelete = todo => {
+    ref
+      .where("id", "==", todo.id)
+      .get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => doc.ref.delete())
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   const handleSubmit = e => {
     e.preventDefault();
-    const newList = [...todoList, {title: newTodo, complete: false}];
-    setTodoList(newList);
+    ref
+      .add({
+        title: newTodo,
+        id: uuidv4(),
+        completed: false
+      })
     document.querySelector("#add-todo").value=""
   }
 
@@ -62,7 +82,7 @@ function App() {
       <div>
           {todoList.map((todo, i) => (
             <Todo 
-              key={i}
+              key={todo.id}
               index={i}
               todo={todo}
               deleteTodo={handleDelete}

@@ -6,7 +6,7 @@ function Todo({todo, index, deleteTodo, completeTodo}) {
     <div className="todo" style={{textDecoration: todo.completed ? "line-through" : ""}}>
       {todo.title}
       <input className="check-box" type="checkbox" onClick={()=>completeTodo(index)}/>
-      <button className="delete-btn" onClick={()=>deleteTodo(index)}>Delete</button>
+      <button className="delete-btn" onClick={()=>deleteTodo(todo)}>Delete</button>
     </div>
   )
 }
